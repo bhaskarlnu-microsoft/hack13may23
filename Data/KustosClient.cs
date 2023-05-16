@@ -10,7 +10,6 @@ using testAPI.Data;
 using System.Data;
 using System.Runtime.CompilerServices;
 using testAPI.Models;
-using Kusto.Ingest;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;

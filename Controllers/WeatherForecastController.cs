@@ -22,6 +22,7 @@ namespace testAPI.Controllers
         {
             List<WeatherForecast> list= new List<WeatherForecast> ();
             var reader = kustoClient.getWeatherForecasts();
+            _logger.LogInformation("Get Request");
             while (reader.Read())
             {
                 list.Add(new WeatherForecast
@@ -42,6 +43,7 @@ namespace testAPI.Controllers
                 TemperatureC = request.TemperatureC ?? 0,
                 Summary = request.Summary ?? "No Summary"
             };
+            _logger.LogInformation("Post Request");
             string response = kustoClient.createNewEntry(weather);
             return response; 
         }

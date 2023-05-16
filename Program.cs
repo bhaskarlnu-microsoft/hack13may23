@@ -2,6 +2,7 @@ using testAPI.Controllers;
 using testAPI.Data;
 using testAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,14 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<KustosClient>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//enable application insights for logging
+builder.Logging.AddApplicationInsights(
+        configureTelemetryConfiguration: (config) =>
+            config.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING"),
+            configureApplicationInsightsLoggerOptions: (options) => { }
+    );
+builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("WeatherForecastAPI", LogLevel.Trace);
 
 var app = builder.Build();
 
@@ -30,3 +39,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
